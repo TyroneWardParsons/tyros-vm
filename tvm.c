@@ -1,21 +1,32 @@
 /* tvm.c */
 #include <stdint.h>
-#include <stdio.h>
+#include <stdlib.h>
+#include "tvm.h"
 
-/* 16-bit memory */
-uint16_t memory[UINT16_MAX + 1];
+/* virtual machine structure */
+struct Tvm {
+    uint16_t memory[UINT16_MAX + 1];
+};
 
-/* loads a state image from a give file */
-void load_image_from_file(const char* path)
+/* allocate a virtual machine */
+Tvm* tvm_alloc()
 {
-    
+    /* allocate memory */
+    Tvm* tvm = calloc(1, sizeof(Tvm));
+
+    /* return pointer */
+    return tvm;
 }
 
-/* main entry point */
-int main(int argc, const char* argv[])
+/* free a virtual machine */
+void tvm_free(Tvm* tvm)
 {
-    /* start the vm */
-    int running = 1;
-    
-    printf("%i", UINT16_MAX);
+    /* free the allocated memory */
+    free(tvm);
+}
+
+/* execute the virtual machine */
+void tvm_execute(Tvm* tvm)
+{
+    tvm->memory[5] = 255;
 }
