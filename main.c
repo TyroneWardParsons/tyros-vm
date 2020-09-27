@@ -8,9 +8,9 @@ int main(int argc, const char* argv[])
 {   
     Tvm* tvm = tvm_alloc();
     
-    printf("Tyros Virtual Machine");
-
     tvm_execute(tvm);
+    tvm_print_registers(tvm);
+    tvm_print_memory(tvm);
 
     tvm_free(tvm);   
 }

@@ -9,3 +9,9 @@ void tvm_free(Tvm* tvm);
 
 /* execute the virtual machine */
 void tvm_execute(Tvm* tvm);
+
+/* print the contents of the registers */
+void tvm_print_registers(Tvm* tvm);
+
+/* print the contents of the memory state */
+void tvm_print_memory(Tvm* tvm);
