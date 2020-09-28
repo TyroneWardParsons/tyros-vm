@@ -13,6 +13,7 @@ struct Tvm {
     uint16_t registers[NUMBER_OF_REGISTERS];
     uint16_t memory[SIZE_OF_MEMORY];
     uint16_t program_counter;
+    int is_running;
 };
 
 /* initialize registers */
@@ -33,6 +34,12 @@ void tvm_init_memory(Tvm* tvm)
     }
 }
 
+/* fetch next instruction */
+uint16_t tvm_fetch(Tvm* tvm)
+{
+    return tvm->memory[tvm->program_counter++];
+}  
+
 /* allocate a virtual machine */
 Tvm* tvm_alloc()
 {
@@ -43,7 +50,8 @@ Tvm* tvm_alloc()
     tvm_init_registers(tvm);
     tvm_init_memory(tvm);
     tvm->program_counter = 0;
-
+    tvm->is_running = 0;
+    
     /* return pointer */
     return tvm;
 }
@@ -58,12 +66,27 @@ void tvm_free(Tvm* tvm)
 /* execute the virtual machine */
 void tvm_execute(Tvm* tvm)
 {
-    tvm->registers[0] = 2;
-    tvm->registers[1] = 2;
-    tvm->registers[2] = 20;
-    tvm->registers[3] = UINT16_MAX;
+    /* set the machine to running */
+    tvm->is_running = 1;
 
-    tvm->memory[3] = 50;
+    /* start the execution loop */
+    while (tvm->is_running)
+    {
+        uint16_t instruction = tvm_fetch(tvm);
+        printf("%hu\n", instruction);
+
+        if (instruction == 0)
+        {
+            tvm->is_running = 0;
+        }
+    }
+}
+
+/* load state from file */
+void tvm_load_state_from_file(Tvm* tvm)
+{
+    tvm->memory[0] = 0x01;
+    tvm->memory[1] = 0x02;
 }
 
 /* print the contents of the registers */
