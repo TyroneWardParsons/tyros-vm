@@ -3,13 +3,30 @@
 	"tasks": [
 		{
 			"type": "shell",
-			"label": "TVM C build task.",
+			"label": "TVM - Build",
 			"command": "C:\\MinGW\\bin\\gcc.exe",
 			"args": [
-				".\\tvm.c",
-				".\\main.c",
+				".\\tvm\\tvm.c",
+				".\\tvm\\main.c",
 				"-o",
 				".\\bin\\tvm.exe"
+			],
+			"options": {
+				"cwd": "${workspaceFolder}"
+			},
+			"problemMatcher": [
+				"$gcc"
+			],
+			"group": "build"
+		},
+		{
+			"type": "shell",
+			"label": "TASM - Build",
+			"command": "C:\\MinGW\\bin\\gcc.exe",
+			"args": [
+				".\\tasm\\main.c",
+				"-o",
+				".\\bin\\tasm.exe"
 			],
 			"options": {
 				"cwd": "${workspaceFolder}"

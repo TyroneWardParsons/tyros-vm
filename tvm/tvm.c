@@ -1,3 +1,4 @@
+/* TVM */
 /* tvm.c */
 #include <stdint.h>
 #include <stdio.h>
@@ -6,13 +7,13 @@
 
 /* constants */
 #define NUMBER_OF_REGISTERS 8
-#define SIZE_OF_MEMORY 10 /* UINT16_MAX + 1 */
+#define SIZE_OF_MEMORY 10 /* UINT32_MAX + 1 */
 
 /* virtual machine structure */
 struct Tvm {
-    uint16_t registers[NUMBER_OF_REGISTERS];
-    uint16_t memory[SIZE_OF_MEMORY];
-    uint16_t program_counter;
+    uint32_t registers[NUMBER_OF_REGISTERS];
+    uint32_t memory[SIZE_OF_MEMORY];
+    uint32_t program_counter;
     int is_running;
 };
 
@@ -35,7 +36,7 @@ void tvm_init_memory(Tvm* tvm)
 }
 
 /* fetch next instruction */
-uint16_t tvm_fetch(Tvm* tvm)
+uint32_t tvm_fetch(Tvm* tvm)
 {
     return tvm->memory[tvm->program_counter++];
 }  
@@ -72,8 +73,10 @@ void tvm_execute(Tvm* tvm)
     /* start the execution loop */
     while (tvm->is_running)
     {
-        uint16_t instruction = tvm_fetch(tvm);
-        printf("%hu\n", instruction);
+        uint32_t instruction = tvm_fetch(tvm);
+        uint32_t opcode = instruction >> 28;
+
+        printf("%u\n", opcode);
 
         if (instruction == 0)
         {
@@ -85,19 +88,21 @@ void tvm_execute(Tvm* tvm)
 /* load state from file */
 void tvm_load_state_from_file(Tvm* tvm)
 {
-    tvm->memory[0] = 0x01;
-    tvm->memory[1] = 0x02;
+    tvm->memory[0] = 0x10000000;
+    tvm->memory[1] = 0x20000000;
+    tvm->memory[2] = 0x00000000;
 }
 
 /* print the contents of the registers */
 void tvm_print_registers(Tvm* tvm)
 {
     printf("Registers\n");
-    printf("PC -> 0x%04hx\n", tvm->program_counter);
+    printf("PC -> 0x%08x\n", tvm->program_counter);
     for (int i = 0; i < NUMBER_OF_REGISTERS; i ++)
     {
-        printf("R%i -> 0x%04hx\n", i, tvm->registers[i]);
+        printf("R%i -> 0x%08x\n", i, tvm->registers[i]);
     } 
+    printf("\n");
 }
 
 /* print the contents of the memory state */
@@ -106,6 +111,7 @@ void tvm_print_memory(Tvm* tvm)
     printf("Memory\n");
     for (int i = 0; i < SIZE_OF_MEMORY; i ++)
     {
-        printf("0x%04x -> 0x%04hx\n", i, tvm->memory[i]);
-    } 
+        printf("0x%08x -> 0x%08x\n", i, tvm->memory[i]);
+    }
+    printf("\n");
 }
