@@ -2,6 +2,7 @@
 /* main.c */
 #include <stdint.h>
 #include <stdio.h>
+#include <stdlib.h>
 #include "tvm.h"
 
 /* main entry point */
@@ -17,5 +18,8 @@ int main(int argc, const char* argv[])
     tvm_print_memory(tvm);
 
     /* free memory */
-    tvm_free(tvm);   
+    tvm_free(tvm);
+
+    /* return success */
+    return EXIT_SUCCESS;
 }
