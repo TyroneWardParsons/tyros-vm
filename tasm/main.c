@@ -3,6 +3,7 @@
 #include <stdint.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include "lexer.h"
 
 /* main entry point */
 int main(int argc, const char* argv[])
@@ -22,11 +23,7 @@ int main(int argc, const char* argv[])
         exit(EXIT_FAILURE);
     }
 
-    char ch;
-    while ((ch = fgetc(fp)) != EOF)
-    {
-        printf("%c", ch);
-    }
+    tasm_lex(fp);
 
     fclose(fp);
 
