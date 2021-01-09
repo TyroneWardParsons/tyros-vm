@@ -7,11 +7,18 @@
 /* main entry point */
 int main(int argc, const char* argv[])
 {
-    FILE* fp = fopen("./src/sum.tvm", "r");
+    if (argc == 1)
+    {
+        fprintf(stderr, "%s\n", "No input file argument.");
+        exit(EXIT_FAILURE);
+    }
+
+    const char* path = argv[1];
+    FILE* fp = fopen(path, "r");
 
     if (fp == NULL)
     {
-        perror("Error while opening file.\n");
+        perror("Error while opening file");
         exit(EXIT_FAILURE);
     }
 

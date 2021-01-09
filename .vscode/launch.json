@@ -6,9 +6,9 @@
     "configurations": [
         {
             "name": "TVM - Run",
-            "type": "cppvsdbg",
+            "type": "cppdbg",
             "request": "launch",
-            "program": ".\\bin\\tvm.exe",
+            "program": "${workspaceFolder}\\bin\\tvm.exe",
             "args": [],
             "stopAtEntry": false,
             "cwd": "${workspaceFolder}",
@@ -17,9 +17,9 @@
         },
         {
             "name": "TASM - Run",
-            "type": "cppvsdbg",
+            "type": "cppdbg",
             "request": "launch",
-            "program": ".\\bin\\tasm.exe",
+            "program": "${workspaceFolder}\\bin\\tasm.exe",
             "args": [],
             "stopAtEntry": false,
             "cwd": "${workspaceFolder}",
